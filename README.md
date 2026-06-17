@@ -1,10 +1,14 @@
 # nature-skills
-大家好，我是nature skills的创立者袁一哲，感谢大家持续关注 nature-skill。我们在抖音更新了很多视频教程，大家可以根据名称去检索查看，希望真心能够帮助到大家。如果你有任何需求，欢迎提交 issue；如果我们认为该需求有意义且可行，也会尽量推进实现。我们同样欢迎 PR，但请务必按照 README 后面说明的格式提交，以便我们更高效地审核与合并。
+
+大家好，我是 nature skills 的创立者袁一哲。感谢大家持续关注 `nature-skills`。我们在抖音更新了很多视频教程，大家可以根据名称检索查看，希望真心能够帮助到大家。
+
+如果你有任何需求，欢迎提交 issue；如果我们认为该需求有意义且可行，会尽量推进实现。我们也欢迎 PR，但请按照本文后面的贡献格式提交，方便更高效地审核与合并。
+
 <table>
   <tr>
     <td align="center">
       <b>视频教程请关注抖音</b><br>
-      <img width="500" alt="6.17投资交流会" src="https://github.com/user-attachments/assets/1eefda21-86a4-4081-96e4-d40dea9e1e7b" />
+      <img width="500" alt="视频教程请关注抖音" src="https://github.com/user-attachments/assets/1eefda21-86a4-4081-96e4-d40dea9e1e7b" />
     </td>
     <td align="center">
       <b>青创人才交流群，记得入群修改备注</b><br>
@@ -13,47 +17,42 @@
   </tr>
 </table>
 
-Hello everyone, I'm Yuan Yizhe, the founder of Nature Skills. Thank you all for your continuous attention to Nature-Skill. We have posted numerous video tutorials on Douyin, which you can search for by title to view. We sincerely hope these resources will be helpful to you.
-If you have any feature requests, feel free to submit an issue. Should we deem a request meaningful and feasible, we will strive to implement it. We also welcome pull requests (PRs). However, please make sure to submit them following the formatting guidelines outlined in the README file to allow us to review and merge your contributions more efficiently.
-
 ---
 
-## Installation
+## 安装
 
-`nature-skills` is a repository of reusable instruction bundles centered on
-`SKILL.md`. Each `skills/nature-*` directory is one installable unit.
+`nature-skills` 是一组围绕 `SKILL.md` 组织的可复用技能包。每个 `skills/nature-*` 目录都是一个可安装单元，部分技能还依赖 `skills/_shared/` 中的共享内容。
 
-For Codex users, the recommended path is simple: give Codex this repository link
-and ask it to install the skills for you.
+### Codex 推荐安装方式
+
+最简单的方式是把仓库链接交给 Codex，并让它安装完整技能目录：
 
 ```text
 https://github.com/Yuan1z0825/nature-skills.git
 ```
 
-Suggested prompt:
+推荐提示词：
 
 ```text
-Install the Codex skills from this repository:
+请从这个仓库安装 Codex skills：
 https://github.com/Yuan1z0825/nature-skills.git
 
-Please install the full skill folders under skills/, including skills/_shared,
-into my Codex skills directory. Do not copy only SKILL.md.
+请把 skills/ 下的完整技能文件夹安装到我的 Codex skills 目录中，包括 skills/_shared。
+不要只复制 SKILL.md。
 ```
 
-For one skill, name it explicitly:
+如果只安装单个技能，请明确说明技能名：
 
 ```text
-Install only nature-reader from:
+只安装这个仓库里的 nature-reader：
 https://github.com/Yuan1z0825/nature-skills.git
 
-Also install skills/_shared if the skill needs shared support files.
+如果该技能需要共享文件，也请一并安装 skills/_shared。
 ```
 
-The important rule is to preserve the folder structure. Copy or reference the
-whole skill folder, not only `SKILL.md`, because many skills depend on
-`references/`, `static/`, `manifest.yaml`, scripts, assets, or shared files.
+关键规则：保留完整目录结构。请复制或引用整个技能文件夹，而不是只复制 `SKILL.md`，因为许多技能依赖 `references/`、`static/`、`manifest.yaml`、脚本、资产或共享文件。
 
-Manual fallback for Codex:
+### 手动安装
 
 ```bash
 git clone https://github.com/Yuan1z0825/nature-skills.git
@@ -65,630 +64,217 @@ for d in skills/nature-*; do
 done
 ```
 
-After installation, start a fresh Codex session and ask naturally, for example:
-`Translate this paper into a full markdown reader.` or `Make this paper into a
-Chinese journal-club PPT.`
+安装后，请开启一个新的 Codex 会话，然后自然描述任务，例如：
 
-For Claude Code or other agents, keep a stable clone of this repository and
-create a thin subagent, slash command, or custom prompt wrapper that points to
-the real `skills/nature-*/SKILL.md` file and preserves `skills/_shared/`.
+```text
+把这篇论文做成中英文对照的完整 Markdown reader。
+```
 
-For the longer walkthrough and troubleshooting notes, see [`install.md`](install.md).
+```text
+把这篇论文做成中文 journal-club PPT。
+```
 
-Portable skill-folder layout:
+更完整的安装说明和排错笔记见 [`install.md`](install.md)。
+
+### 目录结构
 
 ```text
 skills/
-├── _shared/              # keep this when a skill references ../_shared
+├── _shared/              # 当技能引用 ../_shared 时需要保留
 └── nature-<topic>/
     ├── README.md
     ├── SKILL.md
-    ├── manifest.yaml     # present for router-style skills
-    ├── static/           # present for router-style skills
+    ├── manifest.yaml     # router-style 技能会包含
+    ├── static/           # router-style 技能会包含
     └── references/...
 ```
 
-For manual or non-Codex use:
+### 非 Codex 场景
 
-1. Copy the whole skill directory into your prompt library or project.
-2. Preserve `SKILL.md`, `manifest.yaml`, `static/`, `references/`, scripts, assets,
-   and any needed `skills/_shared/` files together.
-3. Adapt the frontmatter and body to the target agent's native format if needed.
+用于 Claude Code 或其他 agent 时，建议保留一个稳定的仓库 clone，再创建轻量 subagent、slash command 或 custom prompt wrapper，指向真实的 `skills/nature-*/SKILL.md`，并保留 `skills/_shared/`。
 
-## Star History
+手动或非 Codex 使用时：
+
+1. 将完整技能目录复制到你的 prompt library 或项目中。
+2. 保留 `SKILL.md`、`manifest.yaml`、`static/`、`references/`、脚本、资产和需要的 `skills/_shared/` 文件。
+3. 如目标 agent 有自己的格式要求，可调整 frontmatter 和正文结构。
+
+## Star 历史
 
 [![Star History Chart](https://api.star-history.com/svg?repos=Yuan1z0825/nature-skills&type=Date&cache_bust=2026-06-07T16)](https://star-history.com/#Yuan1z0825/nature-skills&Date)
 
+## 技能索引
 
-## Skill index
-
-| Skill | Status | Purpose | Trigger keywords |
+| 技能 | 状态 | 用途 | 触发词 |
 |-------|--------|---------|-----------------|
-| [`nature-figure`](skills/nature-figure/README.md) | Stable | Nature/high-impact Python or R figure workflow with bundled figures4papers demos | "Nature figure", "publication plot", "scientific figure", "figures4papers" |
-| [`nature-polishing`](skills/nature-polishing/README.md) | Stable | Academic prose polishing to *Nature* style | "Nature style", "polish", "academic writing" |
-| [`nature-writing`](skills/nature-writing/README.md) | Draft | Nature-style manuscript section drafting and argument restructuring | "Nature writing", "write abstract", "write introduction", "manuscript draft" |
-| [`nature-reviewer`](skills/nature-reviewer/README.md) | Draft | Nature-style reviewer assessment with 3 referee reports and a cross-review synthesis | "Nature reviewer", "pre-submission review", "reviewer report", "peer-review critique", "审稿人视角评估" |
-| [`nature-citation`](skills/nature-citation/README.md) | Beta | Strict Nature / CNS-family citation retrieval with ENW, RIS, and Zotero RDF export | "Nature citation", "CNS citation", "text citation", "supporting references", "Zotero RDF" |
-| [`nature-data`](skills/nature-data/README.md) | Draft | Nature Data Availability statements, repository plans, and FAIR checks | "Data Availability", "repository", "FAIR metadata", "data availability statement" |
-| [`nature-reader`](skills/nature-reader/README.md) | Beta | Full-paper bilingual Markdown reader with source anchors and figure grounding | "nature reader", "full markdown", "paper md", "原文对照", "图文对应", "全文翻译" |
-| [`nature-response`](skills/nature-response/README.md) | Beta | Point-by-point reviewer response letters with comment triage, action mapping, and risk checks | "response to reviewers", "rebuttal letter", "major revision", "审稿意见回复" |
-| [`nature-paper2ppt`](skills/nature-paper2ppt/README.md) | Beta | Chinese PPTX decks from scientific papers | "paper PPT", "journal club", "paper to slides", "paper presentation" |
-| [`nature-paper-to-patent`](skills/nature-paper-to-patent/README.md) | Beta | Evidence-grounded Chinese invention patent drafts from research papers | "paper to patent", "Chinese patent", "claims drafting", "论文转专利", "权利要求书" |
-| [`nature-academic-search`](skills/nature-academic-search/README.md) | Beta | Multi-source literature search, citation verification, and reference management | "search papers", "find articles", "academic search", "literature search", "verify DOI" |
+| [`nature-figure`](skills/nature-figure/README.md) | Stable | 面向 Nature / 高影响力期刊的 Python 或 R 投稿级科研图工作流，内置 figures4papers demo | “Nature figure”, “投稿级图片”, “publication plot”, “scientific figure”, “figures4papers” |
+| [`nature-polishing`](skills/nature-polishing/README.md) | Stable | 将学术文本润色、重构或翻译为 Nature 风格英文 | “Nature style”, “润色”, “academic writing”, “论文英文” |
+| [`nature-writing`](skills/nature-writing/README.md) | Draft | 起草 Nature 风格手稿章节，并重建论文论证 | “Nature writing”, “写摘要”, “写引言”, “manuscript draft”, “论文写作” |
+| [`nature-reviewer`](skills/nature-reviewer/README.md) | Draft | 从审稿人视角模拟 Nature 风格评审，输出三份 reviewer reports 和综合意见 | “Nature reviewer”, “预投稿评审”, “reviewer report”, “审稿人视角评估” |
+| [`nature-citation`](skills/nature-citation/README.md) | Beta | 检索严格限定在 Nature / CNS 系列的支撑文献，并导出 ENW、RIS 或 Zotero RDF | “Nature citation”, “CNS citation”, “分段引用”, “支撑文献”, “Zotero RDF” |
+| [`nature-data`](skills/nature-data/README.md) | Draft | 准备 Data Availability statement、数据仓储方案和 FAIR 检查 | “Data Availability”, “数据可用性”, “repository”, “FAIR metadata” |
+| [`nature-reader`](skills/nature-reader/README.md) | Beta | 生成带来源锚点、图文对应和中英文对照的全文 Markdown reader | “nature reader”, “全文 Markdown”, “原文对照”, “图文对应”, “全文翻译” |
+| [`nature-response`](skills/nature-response/README.md) | Beta | 起草、审查和修改逐点回复审稿人的 response letter | “response to reviewers”, “rebuttal letter”, “major revision”, “审稿意见回复” |
+| [`nature-paper2ppt`](skills/nature-paper2ppt/README.md) | Beta | 从科研论文生成中文 PPTX 文献汇报 deck | “paper PPT”, “journal club”, “paper to slides”, “论文汇报” |
+| [`nature-paper-to-patent`](skills/nature-paper-to-patent/README.md) | Beta | 从论文、技术报告或项目材料生成有证据约束的中国发明专利草稿 | “paper to patent”, “Chinese patent”, “论文转专利”, “权利要求书” |
+| [`nature-academic-search`](skills/nature-academic-search/README.md) | Beta | 多源文献检索、引用核验和参考文献管理 | “search papers”, “find articles”, “literature search”, “查文献”, “verify DOI” |
 
-> **Adding a new skill?** Follow the [contribution guide](#adding-a-new-skill) at the bottom of this file.
+> **想新增技能？** 请参考本文末尾的 [贡献指南](#新增技能)。
 
 ---
 
-## nature-figure
+## 技能概览
 
-**What it does** — Generates multi-panel matplotlib figures that match *Nature* journal
-visual standards: correct typography, semantic colour palette, editable SVG output,
-and non-redundant panel information architecture.
+### `nature-figure`
 
-**Example output gallery** — Five dense, simulated *Nature*-style result figures are
-included in the [`nature-figure` gallery](skills/nature-figure/README.md#example-output-gallery):
-material/mechanism, spatial imaging, in vivo efficacy, single-cell systems and
-perturbation validation.
+用于生成多面板 matplotlib / ggplot2 科研图，目标是满足 Nature 级视觉质量：正确字体、语义配色、可编辑 SVG 输出和非冗余 panel 信息架构。
 
-**Chart-type atlas** — The [`nature-figure` chart atlas](skills/nature-figure/README.md#chart-type-atlas)
-classifies 10 supported chart families, including bar, line, heatmap, scatter/bubble,
-radar/polar, distribution, forest/interval, area/stacked, image-plate and network/matrix
-layouts.
+示例图库与 chart atlas 见 [`nature-figure` README](skills/nature-figure/README.md)。内置图例覆盖材料机制、空间成像、体内疗效、单细胞系统和扰动验证等常见高影响力论文图件场景。
 
 | ![Material design and physical validation](skills/nature-figure/assets/gallery/fig1-material-mechanism-rich.png) | ![Spatial imaging and uptake](skills/nature-figure/assets/gallery/fig2-spatial-imaging-rich.png) | ![In vivo efficacy and tolerability](skills/nature-figure/assets/gallery/fig3-in-vivo-efficacy-rich.png) | ![Single-cell systems figure](skills/nature-figure/assets/gallery/fig4-single-cell-systems-rich.png) | ![Perturbation validation](skills/nature-figure/assets/gallery/fig5-validation-perturbation-rich.png) |
 |---|---|---|---|---|
 
-**Built from** — Production scripts from papers published in *Nature Machine Intelligence*
-and top ML/bioinformatics venues ([figures4papers](https://github.com/ChenLiu-1996/figures4papers)).
-The figures4papers demo scripts and preview assets are bundled inside
-`skills/nature-figure/assets/figures4papers/`, with a routing guide at
-`skills/nature-figure/references/demos.md`.
+关键规则：
 
-**Key rules enforced**
+- 绘图前先确认核心结论、证据层级、panel map、统计和 source-data 需求。
+- Python 图件必须设置 `svg.fonttype = 'none'`，保证 SVG 中文字可编辑。
+- 主输出优先为 `.svg`；`.png` 仅作为 300 dpi 预览或二级输出。
+- 多面板图遵守“overview → deviation → relationship”的信息层级，避免两个 panel 回答同一个科学问题。
 
-- Three mandatory rcParams must always appear first:
-  ```python
-  plt.rcParams['font.family'] = 'sans-serif'
-  plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans', 'Liberation Sans']
-  plt.rcParams['svg.fonttype'] = 'none'   # text stays as <text> nodes, not paths
-  ```
-- Primary output is always `.svg`; `.png` at 300 dpi is a secondary raster preview.
-- Multi-panel figures follow a three-level information hierarchy: **overview → deviation → relationship**. No two panels may answer the same scientific question.
+### `nature-polishing`
 
-**Reference files**
+用于把学术草稿，尤其是中文到英文的论文文本，润色为更接近 Nature 风格的英文。它强调句长控制、章节时态、hedging、引用完整性、过度声称识别和英式英文风格。
 
-```
-skills/nature-figure/
-├── README.md
-├── SKILL.md
-├── manifest.yaml
-├── static/
-└── references/
-    ├── api.md            PALETTE, helper signatures, validation rules
-    ├── design-theory.md  Typography, layout, export policy, anti-redundancy rules
-    ├── common-patterns.md Ultra-wide panels, legend axes, print-safe bars
-    ├── tutorials.md      End-to-end walkthroughs (bars, trends, heatmaps)
-    ├── chart-types.md    Radar, 3D sphere, scatter, fill_between, log-scale
-    └── demos.md          Bundled figures4papers scripts and preview routing
-```
-
-**Supported chart types** — Stacked bar, grouped bar, horizontal ablation bar, trend/line,
-sequential heatmap, diverging z-score heatmap, bubble scatter, radar/polar, 3D sphere
-illustration, fill-between area, log-scale bar, GridSpec multi-panel.
-
----
-
-## nature-polishing
-
-**What it does** — Transforms academic draft text (including Chinese → English translation)
-into prose matching *Nature* journal conventions: ≤ 30-word sentences, section-aware
-tense and hedging, precise vocabulary, correct citation practice, and British English.
-
-**Built from** — A graduate-level scientific English writing course, Academic Phrasebank,
-and close reading of curated *Nature* and *Nature Communications* research articles
-across materials, energy systems, construction decarbonization and machine learning.
-
-**Key rules enforced**
-
-| Domain | Core rule |
-|--------|-----------|
-| Sentence length | Every sentence ≤ 30 words; count individually; last sentence most likely to fail |
-| Hedging calibration | Match claim strength to evidence: *demonstrate* → *suggest* → *may reflect* |
-| Section tense | Results = past tense + quantitative detail; Discussion = hedging + mechanism |
-| Citation integrity | Cite only sources personally read and verified; four attribution types |
-| Overclaim detection | Flag absolutes, unwarranted causation, scope expansion, unverified "first" claims |
-| British English | signalling, colour, analyse, programme, modelling, behaviour |
-
-**12-step polishing workflow**
-
-Sentence split → Section ID → Hourglass check → Tense audit → Sentence edit →
-Vocabulary upgrade → Template check → Citation audit → House style → Overclaim →
-Proofreading → Plain-text output
-
-**Reference files**
-
-```
-skills/nature-polishing/
-├── README.md
-├── SKILL.md
-├── manifest.yaml
-├── static/
-└── references/
-    ├── latex-layout.md
-    ├── published-article-patterns.md
-    ├── phrasebank-playbook.md
-    ├── section-moves.md
-    ├── style-guardrails.md
-    └── writing-strategy.md
-```
-
----
-
-## nature-writing
-
-**What it does** — Drafts or rebuilds manuscript sections from author-provided
-claims, results, figures, notes, or Chinese drafts. It is for argument construction:
-abstracts, introductions, Results narratives, Discussions, Conclusions, titles and
-full manuscript outlines, method sections, experiment sections and reviewer-facing
-self-review.
-
-**Built from** — Close reading of curated *Nature* and *Nature Communications*
-articles, especially how published papers move from field-scale stakes to a narrow
-gap, then to evidence, interpretation and bounded implication. It also integrates
-open research-writing notes for paragraph flow, section logic and adversarial
-paper review.
-
-**Key rules enforced**
-
-| Domain | Core rule |
-|--------|-----------|
-| Evidence first | Do not invent data, mechanisms, references, statistics, novelty or limitations |
-| Abstract | Context/problem → gap → approach → key result → implication → boundary |
-| Introduction | Field scale → bottleneck → prior attempts → unresolved gap → present study |
-| Method | Module motivation → module design → forward process → technical advantage |
-| Results | Build an evidence ladder, not a chronological lab diary |
-| Experiments | Tie claims to baselines, ablations, metrics, stress tests and readable tables |
-| Discussion | Explain meaning, relation to prior work, constraints and future use |
-| Review | Run claim-evidence and rejection-risk checks before submission |
-| Chinese notes | Translate intent and argument, not clause order |
-
-**Reference files**
-
-```
-skills/nature-writing/
-├── README.md
-├── SKILL.md
-├── manifest.yaml
-├── static/
-├── agents/
-│   └── openai.yaml
-└── references/
-    ├── abstract.md
-    ├── article-architecture.md
-    ├── chinese-author-workflow.md
-    ├── conclusion.md
-    ├── experiments.md
-    ├── introduction.md
-    ├── method.md
-    ├── paper-review.md
-    ├── paragraph-flow.md
-    ├── related-work.md
-    └── examples/
-```
-
----
-
-## nature-reviewer
-
-**What it does** — Simulates a Nature-style pre-submission reviewer assessment
-from the referee perspective. It returns three reviewer reports plus a
-cross-review synthesis, focusing on novelty, significance, technical soundness,
-presentation, and likely editorial risk.
-
-**Key rules enforced**
-
-| Domain | Core rule |
-|--------|-----------|
-| Reviewer role | Assess as external referees, not as an author rebuttal writer |
-| Evidence grounding | Use only the manuscript/material supplied by the user and the local reviewer source basis |
-| Multi-reviewer output | Produce three distinct reviewer reports plus a synthesis |
-| Editorial relevance | Separate novelty, significance, technical confidence, presentation, and decision risk |
-| Boundaries | Do not invent experiments, citations, journal policy, or manuscript content |
-
-**Reference files**
+核心流程：
 
 ```text
-skills/nature-reviewer/
-├── README.md
-├── SKILL.md
-└── references/
-    ├── source-basis.md
-    ├── reviewer-workflow.md
-    ├── review-axes.md
-    ├── report-structure.md
-    ├── role-boundaries.md
-    └── qa-checklist.md
+句子拆分 → 章节识别 → 沙漏结构检查 → 时态审查 → 句子修改 → 词汇升级
+→ 模板检查 → 引用审查 → 期刊风格 → 过度声称检查 → 校对 → 纯文本输出
 ```
+
+### `nature-writing`
+
+用于根据作者提供的结果、图表、claims、笔记或中文草稿，起草或重建手稿章节。它处理的是论证构建，而不是只做句子润色。
+
+覆盖摘要、引言、方法、结果叙事、讨论、结论、标题、实验设计描述和 reviewer-facing 自审。默认规则是不编造数据、机制、统计量、引用或创新性；中文笔记按意图与论证翻译，而不是按句序直译。
+
+### `nature-reviewer`
+
+用于从审稿人视角评估手稿，输出三份 reviewer reports 和一份 cross-review synthesis。它关注 novelty、significance、technical soundness、presentation 和 editorial risk。
+
+该技能只基于用户提供的材料和本地 reviewer source basis，不虚构审稿人身份、专业背景或隐藏知识。
+
+### `nature-citation`
+
+用于把论文文本或独立 claim 转化为 Nature / CNS 系列引用候选，并导出一个可被文献管理器导入的 `ENW`、`RIS` 或 Zotero `RDF` 文件。它也可生成 HTML 审查页，支持按年份过滤、选择候选文献和下载指定格式。
+
+关键能力包括分段、范围过滤、支撑等级判断、元数据完整性检查和长文批处理。
+
+### `nature-data`
+
+用于准备和审查 Data Availability statement、数据仓储方案、数据集引用和 FAIR 元数据。它适用于 Nature 系列和 Springer Nature 投稿，也支持把中文作者笔记转为英文投稿文本。
+
+重点是为每个支撑论文结论的数据集提供清晰、持久、可审查的访问路径；不能编造 accession、许可证、限制条件或仓储元数据。
+
+### `nature-reader`
+
+用于把 PDF、DOI、arXiv 链接、出版社 HTML 或粘贴文本转为中英文对照的完整 Markdown reader。默认产物包括 `paper.md`、`source_map.json`、`translation_notes.md` 和 `assets/`。
+
+该技能强调图文对应、source anchor、表格/图像贴近相关正文，并且不能退化成只给摘要。
+
+### `nature-response`
+
+用于起草、审查和修改逐点回复审稿人的 response letter。每条审稿意见会获得稳定 ID，并被分类、映射到行动、手稿位置、证据或缺失信息标记。
+
+核心规则是不编造实验、分析、引用、行号、图版或编辑要求；回复信应是给编辑核查的验证文件，而不是泛泛的礼貌文本。
+
+### `nature-paper2ppt`
+
+用于把科研论文、预印本、PDF、图注或阅读笔记转换为中文 `.pptx`，适合 journal club、组会、实验室会议、论文分享和学位汇报。
+
+它会识别论文类型，提取科学论证，选择真正支撑论证的图表，写中文 slide title、bullet、caption、takeaway 和 speaker notes，并生成实际 PPTX 文件。
+
+### `nature-paper-to-patent`
+
+用于把科研论文、学位论文、技术报告、源代码、图表或发明人笔记转换为有证据约束的中国发明专利草稿。
+
+它会先建立 source ID 和 evidence ledger，再起草权利要求，并生成权利要求书、说明书、说明书摘要、摘要附图和完整审阅稿等中文 DOCX。输出是起草辅助材料，不构成专利性、新颖性、权属、侵权或可提交性法律意见。
+
+### `nature-academic-search`
+
+用于多源学术检索和参考文献管理。它通过本地 MCP server 并行检索 PubMed、CrossRef 和 arXiv，也可显式调用 Scopus / ScienceDirect；支持 DOI、PMID、arXiv ID 查询、引用格式化、MeSH 查询和 `.nbib`、`.ris`、`.bib`、`.enw` 文件工作流。
 
 ---
 
-## nature-citation
+## 共享设计原则
 
-**What it does** — Converts manuscript text or standalone claims into strict Nature / CNS-family
-citation candidates, then exports one reference-manager-ready file in `ENW`, `RIS`, or Zotero
-`RDF`. It can also generate an HTML screening page for year filtering, citation selection, and
-format-specific download.
+所有技能都遵守以下原则：
 
-**Built from** — Crossref metadata retrieval, DOI record export, and journal-family filtering logic
-for Nature Portfolio, the AAAS Science family, and Cell Press.
+1. **优先使用一手来源**：规则基于已发表 Nature 内容、官方期刊指南或明确的本地来源，而不是泛泛审美偏好。
+2. **显式胜过隐式**：每条规则都应说明理由，而不是只给断言。
+3. **感知章节与任务上下文**：学术写作、图件、引用和回复都依赖上下文；不同论文部分使用不同逻辑。
+4. **输出优先**：每个技能都应返回能直接使用的产物，例如可粘贴文本、`.svg`、`.pptx`、`.docx` 或具体建议。
+5. **可扩展**：每个技能自包含在自己的目录中，新增技能不应要求修改既有技能。
 
-**Key rules enforced**
+---
 
-| Domain | Core rule |
-|--------|-----------|
-| Scope filtering | Restrict to Nature Portfolio, Science family, Cell Press, or flagship-only journals |
-| Segmentation | Split long text into citable claim units with stable segment IDs |
-| Search discipline | Translate Chinese claims into English scientific concepts; prefer precision over volume |
-| Support grading | Distinguish strong, partial, background, limiting, and metadata-only support |
-| Export integrity | Do not fabricate DOI, pages, volume, issue, or journal metadata |
-| Download options | Support one-file export in `ENW`, `RIS`, or Zotero `RDF` |
+## 新增技能
 
-**Reference files**
+向本仓库添加技能时，请按以下流程：
+
+### 1. 创建目录
 
 ```text
-skills/nature-citation/
-├── README.md
-├── SKILL.md
-├── manifest.yaml
-├── static/
-├── references/
-│   ├── journal-scope.md
-│   ├── ris-endnote.md
-│   ├── script-usage.md
-│   └── search-strategy.md
-└── scripts/
-    └── nature_citation.py
-```
-
-**Example workflow** — Segment a paragraph, search in-scope citations, review candidates in the
-HTML browser, then download only the selected records as `ENW`, `RIS`, or Zotero `RDF`.
-
----
-
-## nature-data
-
-**What it does** — Prepares and audits Data Availability statements, repository plans,
-dataset citations, and FAIR metadata checks for Nature-family and Springer Nature
-submissions. It is bilingual-aware: Chinese author notes such as "data availability statement",
-"request from corresponding author", "raw data", "restricted data", and "public database" are converted into precise
-submission-ready English with Chinese action notes.
-
-**Built from** — Springer Nature research data policy, Nature Portfolio reporting standards,
-Scientific Data repository and citation practice, the FAIR Guiding Principles, and DataCite
-metadata conventions.
-
-**Key rules enforced**
-
-| Domain | Core rule |
-|--------|-----------|
-| Data Availability | Map every result-supporting dataset to a durable access route |
-| Repository strategy | Prefer mandated or discipline-specific repositories with persistent identifiers |
-| Restricted data | State the restriction reason, controller, review route, and access conditions |
-| Dataset citations | Cite public datasets with DataCite-style creator, title, repository, year, and identifier metadata |
-| FAIR metadata | Check identifiers, licence, README/data dictionary, provenance, version, and reuse conditions |
-| Chinese alignment | Translate intent rather than literal wording; flag vague "reasonable request" phrasing |
-
-**Reference files**
-
-```
-skills/nature-data/
-├── README.md
-├── SKILL.md
-├── manifest.yaml
-├── static/
-├── agents/
-│   └── openai.yaml
-└── references/
-    ├── chinese-author-alignment.md
-    ├── fair-metadata-checklist.md
-    ├── policy-principles.md
-    ├── repository-and-identifiers.md
-    ├── source-basis.md
-    └── statement-patterns.md
-```
-
----
-
-## nature-response
-
-**What it does** — Drafts, audits, and revises point-by-point reviewer response
-letters for Nature-family and high-impact journal manuscript revisions. It treats the
-response letter as an editor-facing verification document: every reviewer concern is assigned
-a stable ID, classified, mapped to an action, and tied to manuscript evidence, a revision
-location, or an unresolved author-input flag.
-
-**Built from** — Nature editorial process guidance, Nature-family revision-package
-instructions, Springer Nature rebuttal advice, and transparent peer-review considerations.
-
-**Key rules enforced**
-
-| Domain | Core rule |
-|--------|-----------|
-| Completeness | Every reviewer comment receives an ID and a response, cross-reference, or unresolved flag |
-| Action mapping | Each reply maps to a concrete manuscript action such as `ACCEPT_TEXT`, `ACCEPT_ANALYSIS`, `SOFTEN_CLAIM`, or `AUTHOR_INPUT_NEEDED` |
-| Traceability | Claimed changes must cite a section, page, line, figure, table, supplement, citation, or visible placeholder |
-| Factuality | Do not invent experiments, analyses, citations, line numbers, figure panels, editor instructions, or manuscript changes |
-| Tone | Use cooperative, evidence-forward language; disagree only with scientific or scope-based reasoning |
-| Chinese alignment | Convert Chinese author notes into English response prose plus Chinese confirmation items when needed |
-
-**Reference files**
-
-```
-skills/nature-response/
-├── README.md
-├── SKILL.md
-├── manifest.yaml
-├── static/
-├── references/
-│   ├── action-mapping.md
-│   ├── chinese-author-alignment.md
-│   ├── comment-taxonomy.md
-│   ├── difficult-cases.md
-│   ├── intake-and-routing.md
-│   ├── qa-checklist.md
-│   ├── response-structure.md
-│   ├── source-basis.md
-│   └── tone-and-stance.md
-├── tests/
-    ├── conflicting-reviewers.md
-    ├── defensive-draft-audit.md
-    ├── evaluation-summary.md
-    ├── impossible-experiment.md
-    ├── major-revision-missing-evidence.md
-    ├── minor-revision.md
-    └── rubric.md
-└── examples/
-    ├── conflicting-reviewers.md
-    ├── major-revision-with-missing-evidence.md
-    └── minor-revision.md
-```
-
----
-
-## nature-paper2ppt
-
-**What it does** — Turns a scientific paper, preprint, PDF, article text, abstract,
-figure legends, or reading notes into a concise Chinese `.pptx` presentation for journal
-club, group meeting, lab meeting, paper sharing, or thesis seminar.
-
-The skill identifies the paper type and central argument, selects only figures and tables
-that support the evidence chain, writes Chinese slide titles, bullets, captions, takeaways
-and speaker notes, creates the actual PPTX deck, and runs lightweight package QA.
-
-**Key rules enforced**
-
-| Domain | Core rule |
-|--------|-----------|
-| Narrative | Use the paper's scientific argument as the slide spine, not the manuscript section order |
-| Paper type | Classify the paper before choosing claim-first, problem-to-solution, workflow-to-validation, or evidence-map logic |
-| Figures | Use figures as evidence; crop or split dense panels rather than shrinking them into unreadable slots |
-| Output | Build a real `.pptx` as the primary deliverable, with Chinese text and speaker notes |
-| QA | Reopen or inspect the PPTX package, record slide count, embedded media, notes, and any rendering limits |
-| Integrity | Do not fabricate results, methods, numbers, datasets, mechanisms, or figure details |
-
-**Reference files**
-
-```
-skills/nature-paper2ppt/
-├── README.md
-├── SKILL.md
-├── manifest.yaml
-├── static/
-└── references/
-    ├── design-and-layout.md
-    ├── figure-assets.md
-    └── self-review.md
-```
-
----
-
-## nature-paper-to-patent
-
-**What it does** — Converts scientific papers, theses, technical reports,
-source code, figures, and inventor notes into evidence-grounded Chinese
-invention patent drafts. It supports complete application packages,
-claim-only drafting, technical disclosure analysis, and paper-patent
-comparison.
-
-The skill creates stable source IDs for paper text, equations, figures, and
-supplementary evidence; builds an evidence ledger before claim drafting; maps
-material claim features to source evidence; preserves core equations as
-editable Office Math; and generates claim-aligned patent flowcharts.
-
-**Key rules enforced**
-
-| Domain | Core rule |
-|--------|-----------|
-| Evidence | Every material claim feature maps to paper, equation, figure, code, or supplementary evidence |
-| Claims | Unsupported features are excluded; unresolved facts become inventor questions |
-| Equations | Source-supported core equations remain editable Office Math with symbol definitions |
-| Figures | The principal method flowchart follows the independent claim and ends with a specific technical output |
-| Deliverables | Produce separate Chinese claims, specification, abstract, abstract-figure, and combined-review DOCX files |
-| Validation | Check claim structure, traceability, terminology, equation coverage, figure alignment, and quality gates |
-
-**Reference files and tools**
-
-```text
-skills/nature-paper-to-patent/
-├── README.md
-├── SKILL.md
-├── manifest.yaml
-├── requirements.txt
-├── static/
-├── references/
-├── scripts/
-├── evals/
-└── tests/
-```
-
-The formal documents are drafting aids for inventor and qualified Chinese
-patent-professional review. The skill does not provide patentability,
-novelty, inventorship, ownership, infringement, or filing-readiness opinions.
-
-Standalone development repository:
-[`snipp-zha/Paper-to-patent-Skill`](https://github.com/snipp-zha/Paper-to-patent-Skill).
-
----
-
-## nature-academic-search
-
-**What it does** — Provides a multi-source academic search and reference-management
-workflow backed by a local MCP server. It searches PubMed, CrossRef and arXiv in
-parallel, fetches records by DOI, PMID or arXiv ID, formats citations, looks up MeSH
-terms, verifies bibliographic identifiers, and supports `.nbib`, `.ris`, `.bib` and
-`.enw` reference-file workflows.
-
-**Built from** — A unified MCP server with source adapters for PubMed E-utilities,
-CrossRef REST metadata and arXiv Atom metadata, plus reusable workflow notes for
-source-tier routing, search strategy, citation parsing, deduplication, RIS/BibTeX
-field mapping and reference-file conversion.
-
-**Setup note** — For Claude Code MCP use, run
-`bash skills/nature-academic-search/install.sh your-email@example.com`, restart Claude Code,
-and optionally set `NCBI_API_KEY` for higher PubMed rate limits. For plain prompt use,
-copy the whole `skills/nature-academic-search/` directory like the other skills.
-
-**Key rules enforced**
-
-| Domain | Core rule |
-|--------|-----------|
-| Source routing | Start with structured API-backed sources: PubMed for biomedical searches, CrossRef for DOI and cross-disciplinary metadata, and arXiv for preprints |
-| Fallback discipline | Escalate from T1 sources to limited APIs or scraped/manual sources only when needed, and warn when results may be incomplete |
-| Deduplication | Merge multi-source hits by DOI, PMID, arXiv ID and normalized title rather than counting duplicate records as separate evidence |
-| Citation verification | Resolve DOI, PMID and arXiv IDs before citation formatting; expose missing or failed metadata instead of filling fields by guesswork |
-| MeSH strategy | Use MeSH lookup for biomedical PubMed queries when the task needs recall, controlled vocabulary or systematic search structure |
-| File integrity | Preserve bibliographic fields when converting `.nbib`, `.ris`, `.bib` and `.enw`; do not fabricate volume, issue, pages, DOI or PMID values |
-
-**MCP tools**
-
-| Tool | Purpose |
-|------|---------|
-| `search_papers` | Search CrossRef, PubMed and arXiv with optional source selection and per-source result limits |
-| `get_paper_by_id` | Fetch paper metadata by DOI, PMID or arXiv ID with automatic ID-type detection |
-| `get_citation` | Generate formatted citations in styles such as APA, Nature, IEEE, Vancouver, Chicago and MLA |
-| `lookup_mesh` | Query PubMed MeSH descriptors for biomedical search-term expansion |
-
-**Reference files**
-
-```text
-skills/nature-academic-search/
-├── README.md
-├── SKILL.md
-├── manifest.yaml
-├── static/
-├── install.sh
-├── config/
-│   ├── mcp-snippet.json
-│   ├── settings-snippet.json
-│   └── triggers-academic-search.toml
-├── mcp-server/
-│   ├── academic_search_server.py
-│   ├── sources/
-│   ├── tests/
-│   └── utils/
-├── references/
-│   ├── citation-parser.md
-│   ├── dedup-engine.md
-│   ├── ris-bibtex-format.md
-│   ├── search-strategy.md
-│   ├── source-tiers.md
-│   └── workflows/
-└── scripts/
-    ├── converters.py
-    ├── format-converter.py
-    └── preflight.py
-```
-
-**Example workflow** — Search the same topic across PubMed, CrossRef and arXiv, merge
-and deduplicate candidate papers, verify key identifiers, look up MeSH terms for the
-biomedical subset, then export or convert the selected references for Zotero, EndNote
-or BibTeX.
-
----
-
-## Shared design principles
-
-All skills in this collection adhere to the following:
-
-1. **Primary sources only** — rules are grounded in published *Nature* content or official
-   journal guidelines, not general style preference.
-2. **Explicit over implicit** — every rule is stated with a rationale, not just asserted.
-3. **Section-aware** — academic writing and figures both require context-sensitivity;
-   each skill applies different logic depending on which part of a paper is being handled.
-4. **Output-first** — every skill returns something immediately usable: copy-paste prose,
-   a `.svg` file, a `.pptx` deck, or a concrete recommendation. No intermediate planning documents.
-5. **Extensible by design** — each skill is self-contained in its own directory; adding a
-   new skill requires no changes to existing ones.
-
----
-
-## Adding a new skill
-
-To add a skill to this collection:
-
-**1. Create a directory**
-```
 skills/nature-<topic>/
 ```
 
-**2. Minimum required files**
+### 2. 最低文件要求
 
-| File | Required | Purpose |
-|------|----------|---------|
-| `SKILL.md` | Yes | Frontmatter (`name`, `description`) + rules + workflow; loaded by the agent after triggering |
-| `README.md` | Yes | Human-readable reference in full English |
-| `references/*.md` | Recommended for complex skills | Modular rule files (api, design theory, tutorials, chart types, …) |
+| 文件 | 是否必需 | 用途 |
+|------|----------|------|
+| `SKILL.md` | 必需 | frontmatter（`name`、`description`）+ 规则 + 工作流；触发后由 agent 加载 |
+| `README.md` | 必需 | 面向人的中文说明文档 |
+| `references/*.md` | 复杂技能推荐 | 模块化规则文件，例如 API、设计理论、教程、图表类型等 |
 
-**3. SKILL.md frontmatter template**
+### 3. `SKILL.md` frontmatter 模板
+
 ```yaml
 ---
 name: nature-<topic>
 description: >-
-  One-sentence description of what the skill does and when to trigger it.
-  Include the output format and the primary use case.
+  用一句话说明这个技能做什么、什么时候触发、主要输出格式和核心使用场景。
 ---
 ```
 
-**4. Update this index**
+### 4. 更新技能索引
 
-Add a row to the [Skill index](#skill-index) table above:
+在上方 [技能索引](#技能索引) 表格中添加一行：
+
 ```markdown
-| [`nature-<topic>`](skills/nature-<topic>/README.md) | Draft / Stable | One-line purpose | trigger keywords |
+| [`nature-<topic>`](skills/nature-<topic>/README.md) | Draft / Stable | 一句话用途 | 触发词 |
 ```
 
-**5. Status labels**
+### 5. 状态标签
 
-| Label | Meaning |
-|-------|---------|
-| `Draft` | Rules defined; not yet tested on real examples |
-| `Beta` | Tested on examples; edge cases may remain |
-| `Stable` | Validated on real academic content; rules are settled |
+| 标签 | 含义 |
+|-------|------|
+| `Draft` | 规则已定义，但尚未在真实案例上测试 |
+| `Beta` | 已在示例上测试，仍可能存在边界问题 |
+| `Stable` | 已在真实学术内容上验证，规则相对稳定 |
 
 ---
 
-## Candidate skills (not yet built)
+## 候选技能
 
-The following are documented gaps. Contributions welcome.
+以下是目前记录的缺口，欢迎贡献：
 
-| Candidate | Scope | Priority |
+| 候选技能 | 范围 | 优先级 |
 |-----------|-------|----------|
-| `nature-stats` | Statistical reporting conventions for *Nature* (effect sizes, confidence intervals, p-value formatting, sample size statements) | High |
-| `nature-methods` | Deep-dive Methods writing assistant — reproducibility checklist, forbidden phrases, ethical approval templates, supplementary organisation | Medium |
-| `nature-cover` | Cover letter drafting — hook paragraph, significance framing, fit-to-journal argument, ≤ 500-word limit | Medium |
+| `nature-stats` | Nature 统计报告规范，例如效应量、置信区间、p 值格式和样本量说明 | 高 |
+| `nature-methods` | 深度 Methods 写作助手，包括可复现性清单、禁用表达、伦理审批模板和补充材料组织 | 中 |
+| `nature-cover` | Cover letter 起草，包括 hook paragraph、意义 framing、期刊匹配理由和 500 词以内限制 | 中 |
 
-
-## ☕ 如果内容对你有帮助，欢迎随缘支持一下
+## 如果内容对你有帮助，欢迎随缘支持一下
 
 ---
 
@@ -700,13 +286,11 @@ The following are documented gaps. Contributions welcome.
 
 </div>
 
-### 💬 想说的话
- 
-项目会长期免费维护，大家正常使用就好。  
-很多朋友还是学生党，所以完全不需要有任何“必须打赏”的压力。
+### 想说的话
 
-如果这些内容刚好帮你节省了一些时间、解决了一点问题，  
-又恰好想请作者喝杯咖啡，那我会非常开心 ☕  
+项目会长期免费维护，大家正常使用就好。很多朋友还是学生党，所以完全不需要有任何“必须打赏”的压力。
+
+如果这些内容刚好帮你节省了一些时间、解决了一点问题，又恰好想请作者喝杯咖啡，那我会非常开心。
 
 你的支持会用于：
 
@@ -714,4 +298,4 @@ The following are documented gaps. Contributions welcome.
 - 服务器与工具费用
 - 熬夜写文档时的续命奶茶（认真）
 
-无论是否赞赏，都非常感谢你的关注与支持 ❤️
+无论是否赞赏，都非常感谢你的关注与支持。
