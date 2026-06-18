@@ -22,11 +22,11 @@
   <tr>
     <td align="center">
       <b>视频教程请关注抖音</b><br>
-      <img width="500" alt="视频教程请关注抖音" src="https://github.com/user-attachments/assets/1eefda21-86a4-4081-96e4-d40dea9e1e7b" />
+      <img width="500" alt="视频教程请关注抖音" src="https://github.com/user-attachments/assets/a4c94ee4-0e7e-4544-ae5f-3a2e957d0bec" />
     </td>
     <td align="center">
       <b>Agent科研交流群</b><br>
-      <img width="500" alt="Agent科研交流群" src="assets/youth-china-yuan-yizhe.png" />
+      <img width="500" alt="Agent科研交流群" src="https://github.com/user-attachments/assets/32b7464d-584f-4cd1-b797-8c062ded3ee5" />
     </td>
   </tr>
 </table>
